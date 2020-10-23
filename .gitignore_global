@@ -26,10 +26,6 @@ Session.vim
 # localhistory
 .history
 
-# PayPal project specific stuff
-.nvmrc
-.agignore
-
 # Over-arching stuff
 *.ignored/
 *.ignored.*
