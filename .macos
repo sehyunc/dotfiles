@@ -52,7 +52,7 @@ echo "installing apps with brew cask"
 brew cask install alfred brave-browser rectangle\
 google-drive-file-stream itsycal visual-studio-code \
 discord zoomus rocket appcleaner\
-qlcolorcode qlstephen quicklook-json notion\
+qlcolorcode qlstephen quicklook-json \
 suspicious-package spotify qmoji slack
 
 echo "Generating an RSA token for GitHub"

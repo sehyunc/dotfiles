@@ -78,9 +78,6 @@ PATH="$PATH:$HOME/.my_bin";
 CDPATH=.:$HOME:$HOME/code:$HOME/code/epic-react:$HOME/code/testingjavascript:$HOME/Desktop
 # CDPATH=($HOME $HOME/code $HOME/Desktop)
 
-# disable https://scarf.sh/
-SCARF_ANALYTICS=false
-
 # Custom Aliases
 alias code="\"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code\""
 function c { code ${@:-.} }
@@ -163,12 +160,5 @@ gif() {
 }
 
 autoload -Uz compinit && compinit
-# Bash completion
-# TODO: couldn't get this to work with zsh...
-# autoload bashcompinit
-# bashcompinit
-# if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-# . "$(brew --prefix)/etc/bash_completion"
-# fi
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
