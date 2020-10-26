@@ -37,7 +37,7 @@ echo "brew installing stuff"
 # tree: really handy for listing out directories in text
 # bat: A cat(1) clone with syntax highlighting and Git integration.
 # switchaudio-osx: allows me to switch the audio device via the command line
-brew install git hub watchman tree bat delta
+brew install git hub watchman tree bat 
 
 echo "installing node (via n-install)"
 curl -L https://git.io/n-install | bash
@@ -51,7 +51,7 @@ npm install --global serve fkill-cli npm-check-updates
 echo "installing apps with brew cask"
 brew cask install alfred brave-browser rectangle\
 google-drive-file-stream itsycal visual-studio-code \
-discord zoomus avibrazil-rdm rocket appcleaner\
+discord zoomus rocket appcleaner\
 qlcolorcode qlstephen quicklook-json notion\
 suspicious-package spotify qmoji slack
 
@@ -268,7 +268,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 # sudo systemsetup -settimezone "Europe/Brussels" > /dev/null
 
 # Stop iTunes from responding to the keyboard media keys
-#launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 ###############################################################################
 # Screen                                                                      #
@@ -473,7 +473,7 @@ defaults write com.apple.dock showhidden -bool true
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 
 # Reset Launchpad, but keep the desktop wallpaper intact
-# find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 # Add iOS & Watch Simulator to Launchpad
 # sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
@@ -497,17 +497,11 @@ defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 # 11: Launchpad
 # 12: Notification Center
 # 1048576 is ⌘ I think
-# Top left screen corner → Desktop
-defaults write com.apple.dock wvous-tl-corner -int 4
-defaults write com.apple.dock wvous-tl-modifier -int 1048576
 # Top right screen corner → Desktop
 defaults write com.apple.dock wvous-tr-corner -int 4
 defaults write com.apple.dock wvous-tr-modifier -int 1048576
-# Bottom left screen corner → Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 1048576
-# Bottom right screen corner → Put display to sleep
-defaults write com.apple.dock wvous-br-corner -int 10
+# Bottom right screen corner → Desktop
+defaults write com.apple.dock wvous-br-corner -int 4
 defaults write com.apple.dock wvous-br-modifier -int 1048576
 
 ###############################################################################
