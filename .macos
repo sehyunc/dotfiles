@@ -53,7 +53,7 @@ brew cask install alfred brave-browser rectangle\
 google-drive-file-stream itsycal visual-studio-code \
 discord zoomus rocket appcleaner\
 qlcolorcode qlstephen quicklook-json \
-suspicious-package spotify qmoji slack
+suspicious-package spotify qmoji slack hyper
 
 echo "Generating an RSA token for GitHub"
 mkdir -p ~/.ssh
