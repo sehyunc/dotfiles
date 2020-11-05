@@ -1,51 +1,45 @@
 #!/bin/bash
 
-export TERM=xterm-256color
-export CLICOLOR=1
-export LSCOLORS=Fafacxdxbxegedabagacad
+# Add every binary that requires nvm, npm or node to run to an array of node globals
+NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+NODE_GLOBALS+=("node")
+NODE_GLOBALS+=("nvm")
+NODE_GLOBALS+=("npx")
 
-# PROMPT STUFF
-GREEN=$(tput setaf 2);
-YELLOW=$(tput setaf 3);
-RESET=$(tput sgr0);
-
-function git_branch {
-  # Shows the current branch if in a git repository
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \(\1\)/';
+# Lazy-loading nvm + npm on node globals call
+load_nvm () {
+  export NVM_DIR=~/.nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+  if [ -f "$NVM_DIR/bash_completion" ]; then
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+  fi
 }
 
-function random_element {
-  declare -a array=("$@")
-  r=$((RANDOM % ${#array[@]}))
-  printf "%s\n" "${array[$r]}"
-}
+# Making node global trigger the lazy loading
+for cmd in "${NODE_GLOBALS[@]}"; do
+  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
+done
 
-# Default Prompt
-setEmoji () {
-  EMOJI="$*"
-  DISPLAY_DIR='$(dirs)'
-  DISPLAY_BRANCH='$(git_branch)'
-  PROMPT="${YELLOW}${DISPLAY_DIR}${GREEN}${DISPLAY_BRANCH}${RESET} ${EMOJI}"$'\n'"$ ";
-}
+# Antigen Settings
+source /usr/local/share/antigen/antigen.zsh
+antigen use oh-my-zsh
+antigen bundle zsh-users/zsh-autosuggestions
+# antigen bundle denysdovhan/spaceship-prompt
+antigen bundle mafredri/zsh-async
+antigen bundle sindresorhus/pure
+antigen apply
 
-newRandomEmoji () {
-  setEmoji "$(random_element 😅 👽 🔥 🚀 👻 ⛄ 👾 🍔 😄 🍰 🐑 😎 🏎 🤖 😇 😼 💪 🦄 🥓 🌮 🎉 💯 ⚛️ 🐠 🐳 🐿 🥳 🤩 🤯 🤠 👨‍💻 🦸‍ 🧝‍ 🧞‍ 🧙‍ 👨‍🚀 👨‍🔬 🕺 🦁 🐶 🐵 🐻 🦊 🐙 🦎 🦖 🦕 🦍 🦈 🐊 🦂 🐍 🐢 🐘 🐉 🦚 ✨ ☄️ ⚡️ 💥 💫 🧬 🔮 ⚗️ 🎊 🔭 ⚪️ 🔱)"
-}
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/sehyun/.oh-my-zsh"
 
-newRandomEmoji
+# Themes
+ZSH_THEME=""
 
-alias jestify="PS1=\"🃏\"$'\n'\"$ \"";
-alias testinglibify="PS1=\"🐙\"$'\n'\"$ \"";
-alias cypressify="PS1=\"🌀\"$'\n'\"$ \"";
-alias staticify="PS1=\"🚀\"$'\n'\"$ \"";
-alias nodeify="PS1=\"💥\"$'\n'\"$ \"";
-alias reactify="PS1=\"⚛️\"$'\n'\"$ \"";
-alias harryify="PS1=\"🧙‍\"$'\n'\"$ \"";
+# Plugins
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
 
-# allow substitution in PS1
-setopt promptsubst
-
-# history size
+# History size
 HISTSIZE=5000
 HISTFILESIZE=10000
 
@@ -61,104 +55,28 @@ setopt INC_APPEND_HISTORY
 # do not store duplications
 setopt HIST_IGNORE_DUPS
 
-# PATH ALTERATIONS
-## Node
-PATH="/usr/local/bin:$PATH:./node_modules/.bin";
-
-## Yarn
-# PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-alias yarn="echo update the PATH in ~/.zshrc"
-
-# Custom bins
-PATH="$PATH:$HOME/.bin";
-# dotfile bins
-PATH="$PATH:$HOME/.my_bin";
-
-# CDPATH ALTERATIONS
-CDPATH=.:$HOME:$HOME/code:$HOME/code/epic-react:$HOME/code/testingjavascript:$HOME/Desktop
-# CDPATH=($HOME $HOME/code $HOME/Desktop)
-
-# Custom Aliases
-alias code="\"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code\""
-function c { code ${@:-.} }
-alias ll="ls -1a";
-alias ..="cd ../";
-alias ..l="cd ../ && ll";
-alias pg="echo 'Pinging Google' && ping www.google.com";
-alias vz="vim ~/.zshrc";
-alias cz="code ~/.zshrc";
-alias sz="source ~/.zshrc";
-alias de="cd ~/Desktop";
-alias d="cd ~/code";
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-alias deleteDSFiles="find . -name '.DS_Store' -type f -delete"
-alias kcd-oss="npx -p yo -p generator-kcd-oss -c 'yo kcd-oss'";
-function crapp { cp -R ~/.crapp "$@"; }
-function mcrapp { cp -R ~/.mcrapp "$@"; }
-alias npm-update="npx ncu --dep prod --dep dev --upgrade";
-alias yarn-update="yarn upgrade-interactive --latest";
-alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
-alias dont_index_node_modules='find . -type d -name "node_modules" -exec touch "{}/.metadata_never_index" \;';
-
-## git aliases
-function gc { git commit -m "$@"; }
-alias gs="git status";
-alias gp="git pull";
-alias gf="git fetch";
-alias gpush="git push";
-alias gd="git diff";
-alias ga="git add .";
-dif() { git diff --color --no-index "$1" "$2" | diff-so-fancy; }
-cdiff() { code --diff "$1" "$2"; }
-
-## npm aliases
-alias ni="npm install";
-alias nrs="npm run start -s --";
-alias nrb="npm run build -s --";
-alias nrd="npm run dev -s --";
-alias nrt="npm run test -s --";
-alias nrtw="npm run test:watch -s --";
-alias nrv="npm run validate -s --";
-alias rmn="rm -rf node_modules";
-alias flush-npm="rm -rf node_modules package-lock.json && npm i && say NPM is done";
-alias nicache="npm install --prefer-offline";
-alias nioff="npm install --offline";
-
-## yarn aliases
-alias yar="yarn run";
-alias yas="yarn run start";
-alias yab="yarn run build";
-alias yat="yarn run test";
-alias yav="yarn run validate";
-alias yoff="yarn add --offline";
-alias ypm="echo \"Installing deps without lockfile and ignoring engines\" && yarn install --no-lockfile --ignore-engines"
-
-## use hub for git
-alias git=hub
-
-# Custom functions
-mg () { mkdir "$@" && cd "$@" || exit; }
-shorten() { node ~/code/kcd.im/node_modules/.bin/netlify-shortener "$1" "$2"; }
-cdl() { cd "$@" && ll; }
-npm-latest() { npm info "$1" | grep latest; }
-killport() { lsof -i tcp:"$*" | awk 'NR!=1 {print $2}' | xargs kill -9 ;}
-function quit () {
-  if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: quit appname"
-  else
-    for appname in $1; do
-    osascript -e 'quit app "'$appname'"'
-    done
-  fi
+# execute "ls" after every time the "cd" command is finished. 
+function cd {                                                   
+  builtin cd "$@" && ls
 }
 
-gif() {
-  ffmpeg -i "$1" -vf "fps=25,scale=iw/2:ih/2:flags=lanczos,palettegen" -y "/tmp/palette.png"
-  ffmpeg -i "$1" -i "/tmp/palette.png" -lavfi "fps=25,scale=iw/2:ih/2:flags=lanczos [x]; [x][1:v] paletteuse" -f image2pipe -vcodec ppm - | convert -delay 4 -layers Optimize -loop 0 - "${1%.*}.gif"
-}
+# Aliases
+alias cslogin="ssh cs61c-auu@hive7.cs.berkeley.edu"
+alias venus="java -jar tools/venus.jar . -dm"
+alias sd="sudo shutdown -h +60"
+alias cdr="cd repo"
+alias cdd="cd ~/Documents"
+alias cddd="cd ~/Desktop"
+alias zshrc="vi ~/.zshrc"
+alias ns="npm start"
+alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
+alias caskupgrade="brew outdated --cask | xargs brew cask reinstall"
 
-autoload -Uz compinit && compinit
+# Homebrew Settings
+export PATH="/usr/local/bin:$PATH"
+#export PATH="${HOME}/bin:${PATH}"
 
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+# PyEnv Settings
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
