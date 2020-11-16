@@ -42,10 +42,11 @@ npm install --global serve fkill-cli npm-check-updates
 
 echo "installing apps with brew cask"
 brew cask install alfred brave-browser rectangle \
-google-drive-file-stream \
 discord zoomus rocket appcleaner \
 qlcolorcode qlstephen quicklook-json \
-suspicious-package spotify qmoji slack hyper
+suspicious-package spotify slack hyper
+
+echo "Don't forget to install oh-my-zsh"
 
 echo "making system modifications:"
 

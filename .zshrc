@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# ZSH
-export ZSH="/Users/sehyun/.oh-my-zsh"
-ZSH_THEME=""
-plugins=(git)
-source $ZSH/oh-my-zsh.sh
+# N - Node Version Manager Settings
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 # Antigen Settings
 source /usr/local/share/antigen/antigen.zsh
@@ -14,6 +11,12 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 antigen apply
+
+# ZSH
+export ZSH="/Users/sehyun/.oh-my-zsh"
+ZSH_THEME=""
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
 
 # History size
 HISTSIZE=5000
@@ -36,17 +39,25 @@ function cd {
 }
 
 # Aliases
-alias cslogin="ssh cs61c-auu@hive7.cs.berkeley.edu"
+alias git="hub"
+alias cslogin="ssh cs61c-auu@hive8.cs.berkeley.edu"
 alias venus="java -jar tools/venus.jar . -dm"
 alias sd="sudo shutdown -h +60"
-alias cdr="cd repo"
-alias cdd="cd ~/Documents"
-alias cddd="cd ~/Desktop"
+alias cdd="cd ~/Desktop"
 alias zshrc="vi ~/.zshrc"
 alias ns="npm start"
 alias caskupgrade="brew outdated --cask | xargs brew cask reinstall"
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'a
+alias deleteDSFiles="find . -name '.DS_Store' -type f -delete"
+alias gst="git status -sb"
+alias flush-npm="rm -rf node_modules && npm cache verify && npm i"
 
 # Homebrew Settings
 export PATH="/usr/local/bin:$PATH"
 
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
+# Starship Prompt
+# eval "$(starship init zsh)"
+
+# Pyenv
+eval "$(pyenv init -)"
