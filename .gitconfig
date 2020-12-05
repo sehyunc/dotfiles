@@ -1,6 +1,6 @@
 [user]
-  name = Sehyun Chung
-  email = sehyun@berkeley.edu
+	name = Sehyun Chung
+	email = sehyun@berkeley.edu
 
 [pull]
   rebase = true
