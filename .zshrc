@@ -15,7 +15,7 @@ source /usr/local/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 # antigen bundle denysdovhan/spaceship-prompt
 # antigen bundle sindresorhus/pure
-antigen bundle mafredri/zsh-async
+# antigen bundle mafredri/zsh-async
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
@@ -55,13 +55,13 @@ alias cdd="cd ~/Desktop"
 alias cdc="cd ~/code"
 alias zshrc="vi ~/.zshrc"
 alias ns="npm start"
-alias caskupgrade="brew outdated --cask | xargs brew cask reinstall"
+alias ys="yarn start"
+alias caskupgrade="brew upgrade --cask --greedy"
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'a
 alias deleteDSFiles="find . -name '.DS_Store' -type f -delete"
 alias gst="git status -sb"
 alias flush-npm="rm -rf node_modules && npm cache verify && npm i"
-alias code="code-insiders"
 
 # Homebrew Settings
 export PATH="/usr/local/bin:$PATH"

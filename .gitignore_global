@@ -10,6 +10,9 @@
 # npm
 npm-debug.log
 
+# pnpm
+pnpm-lock.yaml
+
 # yarn
 yarn-error.log
 
