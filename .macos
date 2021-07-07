@@ -26,10 +26,11 @@ mkdir -p "${HOME}/code"
 
 echo "installing homebrew"
 # install homebrew https://brew.sh
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 echo "brew installing stuff"
-brew install git hub watchman tree bat 
+brew install git hub watchman tree bat powerlevel10k antigen
 
 echo "installing node (via n-install)"
 curl -L https://git.io/n-install | bash
@@ -37,14 +38,13 @@ curl -L https://git.io/n-install | bash
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
-echo "installing a few global npm packages"
-npm install --global serve fkill-cli npm-check-updates
-
 echo "installing apps with brew cask"
-brew cask install alfred brave-browser rectangle \
-discord zoomus rocket appcleaner \
+brew cask install raycast brave-browser rectangle \
+discord zoom rocket appcleaner \
 qlcolorcode qlstephen quicklook-json \
-suspicious-package spotify slack hyper
+suspicious-package spotify slack hyper \
+firefox-developer-edition thinkorswim signal \
+visual-studio-code
 
 echo "Don't forget to install oh-my-zsh"
 
@@ -141,7 +141,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # sudo systemsetup -setrestartfreeze on
 
 # Never go into computer sleep mode
-sudo systemsetup -setcomputersleep Off > /dev/null
+# sudo systemsetup -setcomputersleep Off > /dev/null
 
 # Disable Notification Center and remove the menu bar icon
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null

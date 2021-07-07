@@ -55,7 +55,7 @@ alias cdd="cd ~/Desktop"
 alias cdc="cd ~/code"
 alias zshrc="vi ~/.zshrc"
 alias ns="npm start"
-alias ys="yarn start"
+alias ys="yarn && yarn start"
 alias caskupgrade="brew upgrade --cask --greedy"
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'a
@@ -71,12 +71,11 @@ export PATH="/usr/local/sbin:$PATH"
 # eval "$(starship init zsh)"
 
 # Pyenv
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-
-export PATH="$HOME/.poetry/bin:$PATH"
+eval "$(pyenv init --path)"
 
 # Powerline
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PATH="$HOME/.poetry/bin:$PATH"
