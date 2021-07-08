@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# curl https://raw.githubusercontent.com/sehyunc/dotfiles/master/.getdotfiles.sh | bash
 
 echo "Generating an RSA token for GitHub"
 mkdir -p ~/.ssh

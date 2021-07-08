@@ -24,30 +24,6 @@ echo "Hello $(whoami)! Let's get you set up."
 echo "mkdir -p ${HOME}/code"
 mkdir -p "${HOME}/code"
 
-echo "installing homebrew"
-# install homebrew https://brew.sh
-# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-echo "brew installing stuff"
-brew install git hub watchman tree bat powerlevel10k antigen
-
-echo "installing node (via n-install)"
-curl -L https://git.io/n-install | bash
-
-echo "node --version: $(node --version)"
-echo "npm --version: $(npm --version)"
-
-echo "installing apps with brew cask"
-brew cask install raycast brave-browser rectangle \
-discord zoom rocket appcleaner \
-qlcolorcode qlstephen quicklook-json \
-suspicious-package spotify slack hyper \
-firefox-developer-edition thinkorswim signal \
-visual-studio-code
-
-echo "Don't forget to install oh-my-zsh"
-
 echo "making system modifications:"
 
 # Make Chrome Two finger swipe for back and forward
