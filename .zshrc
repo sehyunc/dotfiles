@@ -7,11 +7,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# N - Node Version Manager Settings
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+# Powerline
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Antigen Settings
-source /usr/local/share/antigen/antigen.zsh
+source /Users/sehyun/antigen.zsh
 antigen use oh-my-zsh
 # antigen bundle denysdovhan/spaceship-prompt
 # antigen bundle sindresorhus/pure
@@ -55,27 +57,20 @@ alias cdd="cd ~/Desktop"
 alias cdc="cd ~/code"
 alias zshrc="vi ~/.zshrc"
 alias ns="npm start"
-alias ys="yarn && yarn start"
-alias caskupgrade="brew upgrade --cask --greedy"
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'a
+alias ys="yarn start"
+alias cup="brew upgrade --cask --greedy"
 alias deleteDSFiles="find . -name '.DS_Store' -type f -delete"
 alias gst="git status -sb"
 alias flush-npm="rm -rf node_modules && npm cache verify && npm i"
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
 
 # Homebrew Settings
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
+export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH
 
-# Starship Prompt
-# eval "$(starship init zsh)"
-
-# Pyenv
-eval "$(pyenv init --path)"
-
-# Powerline
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH=$(pyenv root)/shims:$PATH
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
